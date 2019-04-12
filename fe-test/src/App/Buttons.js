@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateDogs } from "../redux";
+import { updateDogs, clearDogs } from "../redux";
 
 class Buttons extends Component {
   // 시바견 업데이트
-  _handleGetDog = () => {};
+  _handleGetDog = () => {
+    fetch("./data.json")
+      .then(res => res.json())
+      .then(data => {
+        this.props.updateDogs(data);
+      })
+      .catch(e => console.log(e));
+  };
   // 시바견 리스트 초기화
-  _handleClearDog = () => {};
+  _handleClearDog = () => {
+    this.props.clearDogs([]);
+  };
 
   render() {
     return (
@@ -19,13 +28,11 @@ class Buttons extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  dogs: state.dogs
-});
 const mapDispatchToProps = dispatch => ({
-  updateDogs: params => dispatch(updateDogs(params))
+  updateDogs: params => dispatch(updateDogs(params)),
+  clearDogs: params => dispatch(clearDogs(params))
 });
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(Buttons);

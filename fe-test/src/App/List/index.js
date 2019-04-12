@@ -1,13 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class List extends Component {
   render() {
-    return(
-      <div>
-        List
-      </div>
-    );
+    return <div>
+      {this.props.dogs.map(dog => (
+        <div>
+          <img src={dog} />
+        </div>
+      ))}
+    </div>;
   }
 }
 
-export default List;
+const mapStateToProps = state => ({
+  dogs: state.dogs
+});
+export default connect(
+  mapStateToProps,
+  undefined
+)(List);
