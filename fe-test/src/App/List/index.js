@@ -84,12 +84,6 @@ class List extends Component {
   componentDidMount() {
     window.addEventListener("scroll", this._handleGetDog, false);
   }
-
-  // componentWillUpdate(prevProps) {
-  //   if (this.props.dogs !== prevProps.dogs)
-  //     this.setState({ dogs: prevProps.dogs });
-  // }
-  // 시바견 업데이트
   _handleGetDog = async () => {
     const scrollTop = window.scrollY;
     const bodyHeight = document.body.scrollHeight;
@@ -105,18 +99,18 @@ class List extends Component {
 
   render() {
     console.log("Rendering...");
-    const { dogs, loading } = this.props;
+    const { dogs, isLoading } = this.props;
     return (
       <Container>
-        {this.state.initLoad && !loading ? (
+        {this.state.initLoad && !isLoading ? (
           <Info>스크롤을 내리거나 GET DOGS 버튼을 클릭해주세요</Info>
         ) : null}
         <Masonry
-          className={this.state.initLoad && loading ? "hide" : "show"}
+          className={this.state.initLoad && isLoading ? "hide" : "show"}
           elementType={"ul"}
           options={{ transitionDuration: 0 }}
           onImagesLoaded={e => {
-            if (loading) {
+            if (isLoading) {
               this.props.updateLoading(false);
               this.setState({ initLoad: false });
             }
@@ -128,7 +122,7 @@ class List extends Component {
               <img src={dog} alt={dog} />
             </Card>
           ))}
-          {loading ? <EmptyCard /> : null}
+          {!isLoading ? <EmptyCard>이미지 준비중 입니다.</EmptyCard> : null}
         </Masonry>
       </Container>
     );
@@ -137,7 +131,7 @@ class List extends Component {
 
 const mapStateToProps = state => ({
   dogs: state.dogs,
-  loading: state.loading
+  isLoading: state.isLoading
 });
 const mapDispatchToProps = dispatch => ({
   getDogs: params => dispatch(getDogs(params)),

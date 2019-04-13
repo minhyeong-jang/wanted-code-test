@@ -19,7 +19,7 @@ export const updateLoading = data => ({
 // Reducer
 const initialState = {
   dogs: [],
-  loading: false
+  isLoading: false
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
     case CLEAR_DOGS:
       return applyClearDogs(state);
     case UPDATE_LOADING:
-      return Object.assign({}, state, { loading: action.data });
+      return applyUpdateLoading(state, action);
     default:
       return state;
   }
@@ -43,7 +43,11 @@ const applyGetDogs = (state, action) => {
 const applyClearDogs = state => {
   return Object.assign({}, state, {
     dogs: []
-    // loading: false
+  });
+};
+const applyUpdateLoading = (state, action) => {
+  return Object.assign({}, state, {
+    isLoading: action.data
   });
 };
 
