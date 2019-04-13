@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
-import { updateDogs, clearDogs } from "../redux";
+import { getDogs, clearDogs, updateLoading } from "../redux";
 
 class Buttons extends Component {
   // 시바견 업데이트
-  _handleGetDog = () => {
-    fetch("./data.json")
-      .then(res => res.json())
-      .then(data => {
-        this.props.updateDogs(data);
-      })
-      .catch(e => console.log(e));
+  _handleGetDog = async () => {
+    this.props.updateLoading(true);
+    const result = await axios.get("./data.json");
+    this.props.getDogs(result.data);
   };
   // 시바견 리스트 초기화
   _handleClearDog = () => {
@@ -29,7 +27,8 @@ class Buttons extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateDogs: params => dispatch(updateDogs(params)),
+  updateLoading: params => dispatch(updateLoading(params)),
+  getDogs: params => dispatch(getDogs(params)),
   clearDogs: params => dispatch(clearDogs(params))
 });
 export default connect(
