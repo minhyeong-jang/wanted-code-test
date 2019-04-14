@@ -93,7 +93,7 @@ class List extends Component {
     const { dogs, isLoading } = this.props;
     return (
       <Container>
-        {this.state.initLoad && !isLoading ? (
+        {!dogs.length && !isLoading ? (
           <Info>스크롤을 내리거나 GET DOGS 버튼을 클릭해주세요</Info>
         ) : null}
         <Masonry
