@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Masonry from "react-masonry-component";
 import axios from "axios";
 
-import { getDogs, updateLoading } from "../../redux";
+import { updateDogs, updateLoading } from "../../redux";
 
 const Info = styled.div`
   position: absolute;
@@ -86,7 +86,7 @@ class List extends Component {
     if (!this.props.isLoading && scrollPercentRounded >= 95) {
       this.props.updateLoading(true);
       const result = await axios.get("./data.json");
-      this.props.getDogs(result.data);
+      this.props.updateDogs(result.data);
     }
   };
   render() {
@@ -126,7 +126,7 @@ const mapStateToProps = state => ({
   isLoading: state.isLoading
 });
 const mapDispatchToProps = dispatch => ({
-  getDogs: params => dispatch(getDogs(params)),
+  updateDogs: params => dispatch(updateDogs(params)),
   updateLoading: params => dispatch(updateLoading(params))
 });
 export default connect(

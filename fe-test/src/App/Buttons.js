@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { getDogs, clearDogs, updateLoading } from "../redux";
+import { updateDogs, clearDogs, updateLoading } from "../redux";
 
 const Button = styled.button`
   outline: none;
@@ -31,12 +31,12 @@ class Buttons extends Component {
   _handleGetDog = async () => {
     this.props.updateLoading(true);
     const result = await axios.get("./data.json");
-    this.props.getDogs(result.data);
+    this.props.updateDogs(result.data);
   };
   // 시바견 리스트 초기화
   _handleClearDog = () => {
     if (this.props.isLoading) {
-      alert("이미지 로딩중입니다.");
+      alert("이미지 준비중입니다.");
       return false;
     }
     this.props.clearDogs([]);
@@ -57,7 +57,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   updateLoading: params => dispatch(updateLoading(params)),
-  getDogs: params => dispatch(getDogs(params)),
+  updateDogs: params => dispatch(updateDogs(params)),
   clearDogs: params => dispatch(clearDogs(params))
 });
 export default connect(

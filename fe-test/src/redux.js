@@ -3,7 +3,7 @@ const CLEAR_DOGS = "CLEAR_DOGS";
 const UPDATE_LOADING = "UPDATE_LOADING";
 
 // Action
-export const getDogs = data => ({
+export const updateDogs = data => ({
   type: GET_DOGS,
   data
 });
@@ -24,7 +24,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_DOGS:
-      return applyGetDogs(state, action);
+      return applyupdateDogs(state, action);
     case CLEAR_DOGS:
       return applyClearDogs(state);
     case UPDATE_LOADING:
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) => {
 };
 
 // Reducer Functions
-const applyGetDogs = (state, action) => {
+const applyupdateDogs = (state, action) => {
   return Object.assign({}, state, {
     dogs: [...state.dogs, ...action.data]
   });
