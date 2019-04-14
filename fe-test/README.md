@@ -44,3 +44,49 @@
 
 ### 문제 해결 방법
   * 이 섹션에 문제를 해결한 방법을 적어주세요.
+
+  > 라이브러리 관련 금요일에 메일 보내드렸는데, 답장이 없어 우선 진행하였습니다.
+
+  - axios를 사용하여 /date.json 을 호출합니다.
+
+    - fetch로 호출하였으나, 실무에서 자주 사용하는 axios로 변경했습니다.
+
+  - redux.js에 Reducer, Action을 구성합니다.
+
+    - ducks 기법을 사용하여 파일 하나로 관리합니다.
+    - redux에서는 다음과 같은 기능을 합니다.
+
+    ```
+    // dogs: 리스트 저장, isLoading: data.json 호출 진행 여부
+    state = { dogs: array, isLoading: boolean }
+    updateDogs : 강아지 데이터를 수정합니다.
+    clearDogs : 강아지 데이터를 초기화합니다.
+    updateLoading : 로딩 상태를 수정합니다.
+    ```
+
+    - reducer에서 Object.assign을 return 해도 되나, 함수를 호출하는 방식으로 만들었습니다.
+
+  - buttons.js, list/index.js에서 API를 호출합니다.
+
+    - axios로 데이터를 호출하여 updateDogs에 파라미터로 넘깁니다.
+    - updateDogs 호출 전, isLoading을 true로 변경하고 작업합니다.
+    - 변경된 isLoading은 이미지 로딩이 완료되면 false로 변경됩니다.
+
+  - styled-components를 사용하여 CSS를 작업합니다.
+
+  - react-masonry-component를 사용하여 요구사항에 맞는 UI를 작성합니다.
+
+    - masonry 내에 저장된 dogs를 출력합니다.
+    - 이미지 로딩이 완료되지 않으면 레이아웃이 깨져 로딩완료 후 출력이 진행됩니다.
+    - isLoading 상태에 따라 "이미지 로딩중입니다." 라는 박스를 노출시킵니다.
+    - 768px 기준으로 시바견 이미지 사이즈를 다르게 적용합니다.
+
+  - infinite 스크롤을 작업합니다.
+
+    - addEventListener로 스크롤을 감지합니다.
+    - 전체 스크롤 대비 스크롤 위치가 95% 내려가있으면, API를 호출합니다.
+    - scrollRestoration이 auto인 경우, 페이지 새로고침 시 자동으로 스크롤이 내려가서 manual로 변경하였습니다.
+
+  - eslint는 vscode plugin 기본 설정에 따라갑니다.
+  - 궁금하신 점은 public.doriri@gmail.com 으로 메일 바랍니다.
+  - 읽어주셔서 감사합니다.
