@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Masonry from "react-masonry-component";
 import axios from "axios";
 
+import DetailModal from "./DetailModal";
 import { updateDogs, updateLoading } from "../../redux";
 
 const Info = styled.div`
@@ -24,6 +25,7 @@ const Card = styled.div`
   border-radius: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
   box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3),
     0 5px 12px rgba(133, 133, 133, 0.22);
   img {
@@ -71,7 +73,13 @@ const Container = styled.div`
 class List extends Component {
   constructor(props) {
     super(props);
-    this.state = { initLoad: true };
+    this.state = {
+      initLoad: true,
+      detail: {
+        visible: false,
+        data: null
+      }
+    };
   }
 
   componentDidMount() {
@@ -108,7 +116,12 @@ class List extends Component {
           }}
         >
           {dogs.map((dog, index) => (
-            <Card key={index}>
+            <Card
+              key={index}
+              onClick={() =>
+                this.setState({ detail: { visible: true, data: dog } })
+              }
+            >
               <img src={dog} alt={dog} />
             </Card>
           ))}
@@ -116,6 +129,11 @@ class List extends Component {
             <EmptyCard className="emptyCard">이미지 준비중입니다.</EmptyCard>
           ) : null}
         </Masonry>
+        <DetailModal
+          data={this.state.detail.data}
+          visible={this.state.detail.visible}
+          onClose={() => this.setState({ detail: { visible: false } })}
+        />
       </Container>
     );
   }
