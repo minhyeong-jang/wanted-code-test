@@ -42,7 +42,6 @@ const Background = styled.div`
 
 const DetailModal = props => {
   const { visible, onClose, data } = props;
-  console.log(props);
   return (
     <React.Fragment>
       <Modal style={{ display: visible ? null : "none" }}>
