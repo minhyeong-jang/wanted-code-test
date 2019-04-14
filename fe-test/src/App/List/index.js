@@ -26,7 +26,6 @@ const Card = styled.div`
   text-overflow: ellipsis;
   box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3),
     0 5px 12px rgba(133, 133, 133, 0.22);
-
   img {
     display: block;
     width: 100%;
@@ -36,20 +35,11 @@ const Card = styled.div`
     margin: 5px;
   }
 `;
-const EmptyCard = styled.div`
-  width: calc(25% - 10px);
-  margin: 10px 0px;
-  border-radius: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3),
-    0 5px 12px rgba(133, 133, 133, 0.22);
+const EmptyCard = styled(Card)`
   height: 200px;
-  background-color: #dedede;
-  background-size: contain;
-  background-position: center;
-  background-image: url("https://www.materialui.co/materialIcons/image/photo_camera_grey_192x192.png");
-  background-repeat: no-repeat;
+  line-height: 200px;
+  color: #999;
+  background-color: #f2f2f2;
 `;
 const Container = styled.div`
   max-width: 1060px;
@@ -58,14 +48,16 @@ const Container = styled.div`
   ul {
     padding: 0;
     margin: 0;
-  }
-  ul.hide {
-    ${Card} {
-      display: none;
+    &.show {
+      animation: fadein 1s;
     }
-  }
-  ul.show {
-    animation: fadein 1s;
+    &.hide {
+      ${Card} {
+        &:not(.emptyCard) {
+          display: none;
+        }
+      }
+    }
   }
   @keyframes fadein {
     from {
@@ -81,24 +73,23 @@ class List extends Component {
     super(props);
     this.state = { initLoad: true };
   }
+
   componentDidMount() {
-    window.addEventListener("scroll", this._handleGetDog, false);
+    window.history.scrollRestoration = "manual";
+    window.addEventListener("scroll", this._handleGetDog);
   }
+
   _handleGetDog = async () => {
-    const scrollTop = window.scrollY;
-    const bodyHeight = document.body.scrollHeight;
-    const windowHeight = window.innerHeight;
-    const scrollPercent = scrollTop / (bodyHeight - windowHeight);
+    const scrollPercent =
+      window.scrollY / (document.body.scrollHeight - window.innerHeight);
     const scrollPercentRounded = Math.round(scrollPercent * 100);
-    if (scrollPercentRounded >= 95) {
+    if (!this.props.isLoading && scrollPercentRounded >= 95) {
       this.props.updateLoading(true);
       const result = await axios.get("./data.json");
       this.props.getDogs(result.data);
     }
   };
-
   render() {
-    console.log("Rendering...");
     const { dogs, isLoading } = this.props;
     return (
       <Container>
@@ -115,14 +106,15 @@ class List extends Component {
               this.setState({ initLoad: false });
             }
           }}
-          onLayoutComplete={e => console.log("onLayoutComplete")}
         >
           {dogs.map((dog, index) => (
             <Card key={index}>
               <img src={dog} alt={dog} />
             </Card>
           ))}
-          {!isLoading ? <EmptyCard>이미지 준비중 입니다.</EmptyCard> : null}
+          {isLoading ? (
+            <EmptyCard className="emptyCard">이미지 준비중입니다.</EmptyCard>
+          ) : null}
         </Masonry>
       </Container>
     );
