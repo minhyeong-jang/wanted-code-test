@@ -11,6 +11,7 @@ const Modal = styled.div`
   z-index: 10;
   background-color: white;
   img {
+    display: block;
     max-height: 80vh;
     max-width: 100%;
   }
@@ -24,9 +25,10 @@ const Button = styled.button`
   display: block;
   outline: none;
   cursor: pointer;
+  background-color: white;
+  border: 1px solid #dedede;
   padding: 10px 15px;
   border-radius: 4px;
-  border-color: #d9d9d9;
   margin: 5px auto;
 `;
 const Background = styled.div`

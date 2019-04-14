@@ -11,7 +11,8 @@ const Button = styled.button`
   padding: 10px 15px;
   font-size: 14px;
   border-radius: 4px;
-  border-color: #d9d9d9;
+  background-color: white;
+  border: 1px solid #dedede;
   margin-top: 10px;
   width: 150px;
   &:first-child {
@@ -40,6 +41,7 @@ class Buttons extends Component {
       return false;
     }
     this.props.clearDogs([]);
+    window.scrollTo(0, 0);
   };
 
   render() {
