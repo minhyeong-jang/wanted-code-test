@@ -85,6 +85,8 @@
 
 - styled-components를 사용하여 CSS를 작업합니다.
 
+  - 마지막에 Modal을 생성하면서 Theme 파일을 생성하려고 하였으나, 시간이 부족하여 삭제했습니다.
+
 - react-masonry-component를 사용하여 요구사항에 맞는 UI를 작성합니다.
 
   - masonry 내에 저장된 dogs를 출력합니다.
