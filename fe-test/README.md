@@ -102,6 +102,7 @@
 
 - eslint는 vscode plugin 기본 설정에 따라갑니다.
 
+  - ~~죄송합니다. 월요일 오전에 확인해보니 설정이 잘못되어있었습니다. 바로 수정하겠습니다.~~
   - prop-types를 추가하여 warning을 없앴습니다.
   - es6의 경우 인식이 안돼 parser: 'babel-eslint' 를 설정하여 오류를 없앴습니다.
 
