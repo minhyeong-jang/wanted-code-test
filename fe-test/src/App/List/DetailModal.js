@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Modal = styled.div`
+const Modal = styled.div``;
+const Body = styled.div`
   position: fixed;
   top: 5vh;
   left: 50%;
@@ -11,6 +12,7 @@ const Modal = styled.div`
   border-radius: 10px;
   z-index: 10;
   background-color: white;
+  outline: none;
   img {
     display: block;
     max-height: 80vh;
@@ -41,22 +43,36 @@ const Background = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const DetailModal = props => {
-  const { visible, onClose, data } = props;
-  return (
-    <React.Fragment>
+class DetailModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.visible === this.props.visible) return false;
+    return true;
+  }
+  componentDidUpdate() {
+    this.body.focus();
+  }
+  render() {
+    const { visible, onClose, data } = this.props;
+    return (
       <Modal style={{ display: visible ? null : "none" }}>
-        <Header>이름 모를 시바</Header>
-        <img src={data} alt="강아지 상세보기" />
-        <Button onClick={onClose}>닫기</Button>
+        <Body
+          ref={ref => (this.body = ref)}
+          onKeyDown={e => (e.keyCode === 27 ? onClose() : null)}
+          tabIndex={0}
+        >
+          <Header>이름 모를 시바</Header>
+          <img src={data} alt="강아지 상세보기" />
+          <Button onClick={onClose}>닫기</Button>
+        </Body>
+        <Background onClick={onClose} />
       </Modal>
-      <Background
-        style={{ display: visible ? null : "none" }}
-        onClick={onClose}
-      />
-    </React.Fragment>
-  );
-};
+    );
+  }
+}
 
 DetailModal.propTypes = {
   visible: PropTypes.bool.isRequired,
