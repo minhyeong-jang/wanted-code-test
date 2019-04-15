@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import Masonry from "react-masonry-component";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 import DetailModal from "./DetailModal";
 import { updateDogs, updateLoading } from "../../redux";
@@ -108,7 +109,7 @@ class List extends Component {
           className={this.state.initLoad && isLoading ? "hide" : "show"}
           elementType={"ul"}
           options={{ transitionDuration: 0 }}
-          onImagesLoaded={e => {
+          onImagesLoaded={() => {
             if (isLoading) {
               this.props.updateLoading(false);
               this.setState({ initLoad: false });
@@ -138,6 +139,13 @@ class List extends Component {
     );
   }
 }
+
+List.propTypes = {
+  dogs: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateLoading: PropTypes.func.isRequired,
+  updateDogs: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   dogs: state.dogs,

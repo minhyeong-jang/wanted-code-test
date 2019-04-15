@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 import { updateDogs, clearDogs, updateLoading } from "../redux";
 
@@ -53,6 +54,13 @@ class Buttons extends Component {
     );
   }
 }
+
+Buttons.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  updateLoading: PropTypes.func.isRequired,
+  updateDogs: PropTypes.func.isRequired,
+  clearDogs: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   isLoading: state.isLoading

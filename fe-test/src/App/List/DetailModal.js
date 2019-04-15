@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Modal = styled.div`
   position: fixed;
@@ -55,6 +56,12 @@ const DetailModal = props => {
       />
     </React.Fragment>
   );
+};
+
+DetailModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  data: PropTypes.string
 };
 
 export default DetailModal;
